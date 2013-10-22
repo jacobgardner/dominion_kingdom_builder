@@ -1,0 +1,237 @@
+Sets:
+    - name: Base Set
+      cards:
+        - name: Adventurer
+          type: Action
+          cost: 6
+          desc: Reveal cards from your deck until you reveal 2 Treasure cards. Put those Treasure cards into your hand and discard the other revealed cards.
+
+        - name: Bureaucrat
+          type: [Action, Attack]
+          cost: 4
+          desc: Gain a Silver card; put it on top of your deck. Each other player reveals a Victory card from his hand and puts it on his deck (or reveals a hand with no Victory cards).
+
+        - name: Cellar
+          type: Action
+          cost: 2
+          desc: |
+                [b]+1 Action[/b]
+                Discard any number of cards. +1 Card per card discarded.
+
+        - name: Chancellor
+          type: Action
+          cost: 3
+          desc: |
+                [b]+[gold=2][/b]
+                You may immediately put your deck into your discard pile.
+
+        - name: Chapel
+          type: Action
+          cost: 2
+          desc: Trash up to 4 cards from your hand.
+
+        - name: Council Room
+          type: Action
+          cost: 5
+          desc: |
+                [b]+4 Cards[/b]
+                [b]+1 Buy[/b]
+                Each other player draws a card.
+
+        - name: Feast
+          type: Action
+          cost: 4
+          desc: 'Trash this card.  Gain a card costing up to [gold=5].'
+
+        - name: Festival
+          type: Action
+          cost: 5
+          desc: |
+                [b]+2 Actions[/b]
+                [b]+1 Buy[/b]
+                [b]+[gold=2][/b]
+
+        - name: Gardens
+          type: Victory
+          cost: 4
+          desc: 'Worth 1[victory] for every 10 cards in your deck (rounded down).'
+
+        - name: Laboratory
+          type: Action
+          cost: 5
+          desc: |
+                [b]+2 Cards[/b]
+                [b]+1 Action[/b]
+
+        - name: Library
+          type: Action
+          cost: 5
+          desc: 'Draw until you have 7 cards in hand.  You may set aside any Action cards drawn this way as you draw them; discard the set aside cards after you finish drawing.'
+
+        - name: Market
+          type: Action
+          cost: 5
+          desc: |
+                [b]+1 Card[/b]
+                [b]+1 Action[/b]
+                [b]+1 Buy[/b]
+                [b]+[gold=1][/b]
+        - name: Militia
+          type: [Action, Attack]
+          cost: 4
+          desc: |
+                [b]+[gold=2][/b]
+                Each otehr player discards down to 3 cards in his hand.
+
+        - name: Mine
+          type: Action
+          cost: 5
+          desc: 'Trash a Treasure card from your hand. Gain a Treasure card costing up to [gold=3] more; put it in your hand.'
+
+        - name: Moat
+          type: [Action, Reaction]
+          cost: 2
+          desc: |
+                [b]+2 Cards[/b]
+                ---
+                When another player plays an Attack card, you may reveal this from your hand. If you do, you are unaffected by that Attack.
+
+        - name: Moneylender
+          type: Action
+          cost: 4
+          desc: 'Trash a Copper card from your hand. If you do, +[gold=3].'
+
+        - name: Remodel
+          type: Action
+          cost: 4
+          desc: 'Trash a card from your hand. Gain a card costing up to [gold=2] more than the trashed card.'
+
+        - name: Smithy
+          type: Action
+          cost: 4
+          desc: '[b]+3 Cards[/b]'
+
+        - name: Spy
+          type: [Action, Attack]
+          cost: 4
+          desc: |
+                [b]+1 Card[/b]
+                [b]+1 Action[/b]
+                Each player (including you) reveals the top card of his deck and either discards it or puts it back, your choice.
+
+        - name: Thief
+          type: [Action, Attack]
+          cost: 4
+          desc: |
+                Each other player reveals the top 2 cards of his deck.  
+                If they revealed any Treasure cards, they trash one of them that you choose.  
+                You may gain any or all of these trashed cards.  They discard the other revealed cards.
+
+        - name: Throne Room
+          type: Action
+          cost: 4
+          desc: Choose an Action card in your hand.  Play it twice.
+
+        - name: Village
+          type: Action
+          cost: 3
+          desc: |
+                [b]+1 Card[/b]
+                [b]+2 Actions[/b]
+
+        - name: Witch
+          type: [Action, Attack]
+          cost: 5
+          desc: |
+                [b]+2 Cards[/b]
+                Each other player gains a Curse card.
+
+        - name: Woodcutter
+          type: Action
+          cost: 3
+          desc: |
+                [b]+1 Buy[/b]
+                [b]+[gold=2][/b]
+
+        - name: Workshop
+          type: Action
+          cost: 3
+          desc: 'Gain a card costing up to [gold=4].'
+
+    - name: Intrigue
+      cards:
+        - name: Baron
+          type: Action
+
+        - name: Bridge
+          type: Action
+
+        - name: Conspirator
+          type: Action
+
+        - name: Coppersmith
+          type: Action
+
+        - name: Courtyard
+          type: Action
+
+        - name: Duke
+          type: Victory
+
+        - name: Great Hall
+          type: [Action, Victory]
+
+        - name: Harem
+          type: [Treasure, Victory]
+
+        - name: Ironworks
+          type: Action
+
+        - name: Masquerade
+          type: Action
+
+        - name: Mining Village
+          type: Action
+
+        - name: Minion
+          type: [Action, Attack]
+
+        - name: Nobles
+          type: [Action, Victory]
+
+        - name: Pawn
+          type: Action
+
+        - name: Saboteur
+          type: [Action, Attack]
+
+        - name: Scout
+          type: Action
+
+        - name: Secret Chamber
+          type: [Action, Reaction]
+
+        - name: Shanty Town
+          type: Action
+
+        - name: Steward
+          type: Action
+
+        - name: Swindler
+          type: [Action, Attack]
+
+        - name: Torturer
+          type: [Action, Attack]
+
+        - name: Trading Post
+          type: Action
+
+        - name: Tribute
+          type: Action
+
+        - name: Upgrade
+          type: Action
+
+        - name: Wishing Well
+          type: Action
+
