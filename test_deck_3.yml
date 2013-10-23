@@ -1,0 +1,92 @@
+Sets:
+    - name: FileSetA
+      cards:
+        - name: FileCard1
+          type: Action
+        - name: FileCard0
+          type: Action
+        - name: FileCard-1
+          type: Action
+        - name: FileCard-2
+          type: Action          
+        - name: FileCard-3
+          type: Action          
+        - name: FileCard-4
+          type: Action          
+        - name: FileCard-5
+          type: Action          
+        - name: FileCard-6
+          type: Action          
+        - name: FileCard-7
+          type: Action          
+        - name: FileCard-8
+          type: Action          
+
+    - name: FileSetB
+      cards:
+        - name: FileCard2
+          type: [Action, Attack]
+        - name: FileCard31
+          type: [Action, Attack]
+        - name: FileCard32
+          type: [Action, Attack]
+
+    - name: FileSetD
+      cards:
+        - name: FileCard3
+          type: Unique
+        - name: FileCard4
+          type: Unique          
+        - name: FileCard5
+          type: Unique          
+        - name: FileCard6
+          type: Unique          
+        - name: FileCard7
+          type: Unique          
+        - name: FileCard8
+          type: Unique          
+        - name: FileCard9
+          type: Unique          
+        - name: FileCard10
+          type: Unique          
+        - name: FileCard11
+          type: Duration
+        - name: FileCard12
+          type: Duration
+        - name: FileCard13
+          type: Unique
+        - name: FileCard14
+          type: Unique          
+        - name: FileCard15
+          type: Unique          
+        - name: FileCard16
+          type: Unique          
+        - name: FileCard17
+          type: Unique          
+        - name: FileCard18
+          type: Unique          
+        - name: FileCard19
+          type: Unique          
+        - name: FileCard20
+          type: Unique    
+        - name: FileCard21
+          type: Duration
+        - name: FileCard22
+          type: Duration
+        - name: FileCard23
+          type: Unique
+        - name: FileCard24
+          type: Unique          
+        - name: FileCard25
+          type: Unique          
+        - name: FileCard26
+          type: Unique          
+        - name: FileCard27
+          type: Unique          
+        - name: FileCard28
+          type: Unique          
+        - name: FileCard29
+          type: Unique          
+        - name: FileCard30
+          type: Unique    
+

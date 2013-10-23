@@ -1,0 +1,10 @@
+Sets:
+    - name: FileSetA
+      cards:
+        - name: FileCard1
+          type: Action
+
+    - name: FileSetC
+      cards:
+        - name: FileCard2
+          type: Action

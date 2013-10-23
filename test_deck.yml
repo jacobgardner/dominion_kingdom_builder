@@ -1,0 +1,15 @@
+Sets:
+    - name: FileSetA
+      cards:
+        - name: FileCard1
+          type: Action
+
+    - name: FileSetB
+      cards:
+        - name: FileCard2
+          type: [Action, Attack]
+
+    - name: FileSetD
+      cards:
+        - name: FileCard3
+          type: Unique
