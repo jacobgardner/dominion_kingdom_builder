@@ -236,6 +236,14 @@ class TestCollection(unittest.TestCase):
 
             self.assertGreater(uniques, 0)
 
+            collection = dominion.Collection('test_decks/test_deck_3.yml')
+            decks = collection.create_decks(decks=3, type_constraints=dict(
+                Action=(6, 6), Unique=(6, 6)))
+
+            self.assertEquals(len(decks[0]), 10)
+            self.assertEquals(len(decks[1]), 10)
+            self.assertEquals(len(decks[2]), 10)
+
     def test_set_constraints(self):
         for _ in xrange(30):
             collection = dominion.Collection('test_decks/test_deck_3.yml')
@@ -248,6 +256,12 @@ class TestCollection(unittest.TestCase):
             collection = dominion.Collection('test_decks/test_deck_3.yml')
             decks = collection.create_decks(set_constraints=[
                 'FileSetD'])
+
+            for card in decks[0]:
+                self.assertEquals(card.set, 'FileSetD')
+
+            collection = dominion.Collection('test_decks/test_deck_3.yml')
+            decks = collection.create_decks(set_constraints='FileSetD')
 
             for card in decks[0]:
                 self.assertEquals(card.set, 'FileSetD')
