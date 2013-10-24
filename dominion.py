@@ -28,12 +28,12 @@ def flatten_cards(sets):
     for set_data in sets['Sets']:
         for card in set_data['cards']:
             card['set'] = set_data['name']
-            cards.append(Card(card))
+            cards.append(Deck(card))
 
     return cards
 
 
-class Card(object):
+class Deck(object):
     def __init__(self, card_data):
         # 1-1 Mapping of dictionary to attributes
         self._attrs = []
@@ -83,90 +83,115 @@ class Collection(object):
 
         del self.cards[card.name]
 
-    def create_decks(self, decks=1, deck_size=10, type_constraints={},
-                     set_constraints=None, pinned_cards=[]):
-        decks = [Deck(deck_size) for _ in xrange(decks)]
+    def create_supply(self, supplies=1, deck_size=10, type_constraints={},
+                      set_constraints=None, pinned_cards=[]):
+
+        # Create a supply for each count
+        supplies = [Supply(deck_size) for _ in xrange(supplies)]
 
         try:
+            # If a single list, then distribute the pinned cards across the
+            # supplies randomly.
             for card in pinned_cards:
-                d = random.choice(decks)
+                d = random.choice(supplies)
                 d.cards.append(self.cards[card])
                 self.remove(card)
         except TypeError:
-            for pinned_cards, deck in zip(pinned_cards, decks):
+            # If a list of lists, then each list corresponds with a supply pile
+            for pinned_cards, deck in zip(pinned_cards, supplies):
                 for card in pinned_cards:
                     deck.cards.append(self.cards[card])
                     self.remove(card)
 
         try:
+            # Wrap it up
             if isinstance(set_constraints, str):
                 set_constraints = [set_constraints]
 
+            # Find the cards that aren't in the desired sets
             remove_cards = [card for card in self.cards.itervalues()
                             if card.set not in set_constraints]
 
+            # Remove those desired sets
             for card in remove_cards:
                 self.remove(card)
 
         except TypeError:
             pass
 
+        # Add card-type restraints to the supplies
         for key, type_constraint in type_constraints.iteritems():
             type_constraint = Constraint(*type_constraint)
 
-            try:
-                type_count = random.randint(type_constraint.min,
-                                            type_constraint.max)
-                remove_remaining = True
-            except TypeError:
-                type_count = type_constraint.min
-                remove_remaining = False
-
-            for deck in decks:
+            for supply in supplies:
                 try:
+                    # If there's a max, then randomly choose how many of this
+                    # type of card to put in the supply.
+                    type_count = random.randint(type_constraint.min,
+                                                type_constraint.max)
+                    remove_remaining = True
+                except TypeError:
+                    # If there's not a max, just insert the minimum number and
+                    # let the remaining algorithm add additional cards
+                    type_count = type_constraint.min
+                    remove_remaining = False
+
+                try:
+                    # Take a random sample of cards of the type
                     sample = random.sample(self.sorted_cards[key], type_count)
                 except ValueError:
+                    # If there aren't enough of that type of card left, just
+                    # take all the remaining cards.
                     sample = self.sorted_cards[key]
 
+                # Add the cards to the supply and remove them from the
+                # collection
                 for card in sample:
-                    deck.cards.append(card)
+                    supply.cards.append(card)
                     self.remove(card)
 
-                pruned_cards = deck.prune()
+                # Prune the supply down to the deck size.
+                pruned_cards = supply.prune()
 
+                # Re-add the pruned cards (if any) to the collection
                 for card in pruned_cards:
                     self.add(card)
 
+            # If there was a max, remove all cards of that type from the
+            # collection
             if remove_remaining:
                 for card in copy.copy(self.sorted_cards[key]):
                     self.remove(card)
 
+        # At this point, all types with constraints on them have been used
+        # Just keep adding random cards until the supplies are filled up.
         while 1:
-            remaining = [deck for deck in decks if len(deck) < deck_size]
+            remaining = [supply for supply in supplies
+                         if len(supply) < deck_size]
 
             if not remaining:
                 break
 
-            for deck in remaining:
+            for supply in remaining:
                 try:
                     card = random.choice(self.cards.values())
                 except IndexError:
                     raise ValueError(
                         'Not enough cards with your given parameters')
-                deck.cards.append(card)
+                supply.cards.append(card)
                 self.remove(card)
 
-        return decks
+        return supplies
 
 
-class Deck(object):
-    def __init__(self, deck_size=10):
+class Supply(object):
+    def __init__(self, deck_cnt=10):
         self.cards = []
-        self.deck_size = deck_size
+        self.deck_cnt = deck_cnt
 
     def prune(self):
         try:
-            new_cards = random.sample(self.cards, self.deck_size)
+            new_cards = random.sample(self.cards, self.deck_cnt)
             remaining = set(self.cards) - set(new_cards)
             self.cards = new_cards
 
