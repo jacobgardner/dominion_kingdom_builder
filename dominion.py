@@ -97,9 +97,9 @@ class Collection(object):
                 self.remove(card)
         except TypeError:
             # If a list of lists, then each list corresponds with a supply pile
-            for pinned_cards, deck in zip(pinned_cards, supplies):
+            for pinned_cards, supply in zip(pinned_cards, supplies):
                 for card in pinned_cards:
-                    deck.cards.append(self.cards[card])
+                    supply.cards.append(self.cards[card])
                     self.remove(card)
 
         try:
