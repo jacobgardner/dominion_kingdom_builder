@@ -162,76 +162,101 @@ Sets:
       cards:
         - name: Baron
           type: Action
+          cost: 4
 
         - name: Bridge
           type: Action
+          cost: 4
 
         - name: Conspirator
           type: Action
+          cost: 4
 
         - name: Coppersmith
           type: Action
+          cost: 4
 
         - name: Courtyard
           type: Action
+          cost: 2
 
         - name: Duke
           type: Victory
+          cost: 5
 
         - name: Great Hall
           type: [Action, Victory]
+          cost: 3
 
         - name: Harem
           type: [Treasure, Victory]
+          cost: 6
 
         - name: Ironworks
           type: Action
+          cost: 4
 
         - name: Masquerade
           type: Action
+          cost: 3
 
         - name: Mining Village
           type: Action
+          cost: 4
 
         - name: Minion
           type: [Action, Attack]
+          cost: 5
 
         - name: Nobles
           type: [Action, Victory]
+          cost: 6
 
         - name: Pawn
           type: Action
+          cost: 2
 
         - name: Saboteur
           type: [Action, Attack]
+          cost: 5
 
         - name: Scout
           type: Action
+          cost: 4
 
         - name: Secret Chamber
           type: [Action, Reaction]
+          cost: 2
 
         - name: Shanty Town
           type: Action
+          cost: 3
 
         - name: Steward
           type: Action
+          cost: 3
 
         - name: Swindler
           type: [Action, Attack]
+          cost: 3
 
         - name: Torturer
           type: [Action, Attack]
+          cost: 5
 
         - name: Trading Post
           type: Action
+          cost: 5
 
         - name: Tribute
           type: Action
+          cost: 5
 
         - name: Upgrade
           type: Action
+          cost: 5
 
         - name: Wishing Well
           type: Action
+          cost: 3
 

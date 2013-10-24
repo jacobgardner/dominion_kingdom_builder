@@ -85,7 +85,6 @@ class Collection(object):
 
     def create_supply(self, supplies=1, deck_size=10, type_constraints={},
                       set_constraints=None, pinned_cards=[]):
-
         # Create a supply for each count
         supplies = [Supply(deck_size) for _ in xrange(supplies)]
 
@@ -204,3 +203,32 @@ class Supply(object):
 
     def __iter__(self):
         return self.cards.__iter__()
+
+    def pprint(self, sort_on='name'):
+        s = ''
+        categorized = defaultdict(list)
+        for card in self.cards:
+            categorized[card.set].append(card)
+
+        for key, cards in categorized.iteritems():
+            s = ''.join([s, key, '\n'])
+            s = ''.join([s, '=' * len(key), '\n'])
+            cards = sorted(cards, key=lambda x: getattr(x, sort_on))
+            for card in cards:
+                s = ''.join([s, '  ', card.name, ' - ', str(card.cost), '\n'])
+        return s
+
+    def __str__(self):
+        return self.pprint()
+
+
+def main():
+    collection = Collection('dominion_cards.yml')
+    supply = collection.create_supply()[0]
+    print supply
+
+    print supply.pprint(sort_on='cost')
+
+
+if __name__ == '__main__':
+    main()
