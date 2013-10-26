@@ -260,3 +260,104 @@ Sets:
           type: Action
           cost: 3
 
+    - name: Seaside
+      cards:
+        - name: Embargo
+          type: Action
+          cost: 2
+
+        - name: Haven
+          type: [Action, Duration]
+          cost: 2
+
+        - name: Lighthouse
+          type: [Action, Duration]
+          cost: 2
+
+        - name: Native Village
+          type: Action
+          cost: 2
+
+        - name: Pearl Diver
+          type: Action
+          cost: 2
+
+        - name: Ambassador
+          type: [Action, Attack]
+          cost: 3
+
+        - name: Fishing Village
+          type: [Action, Duration]
+          cost: 3
+
+        - name: Smugglers
+          type: Action
+          cost: 3
+
+        - name: Warehouse
+          type: Action
+          cost: 3
+
+        - name: Caravan
+          type: [Action, Duration]
+          cost: 4
+
+        - name: Cutpurse
+          type: [Action, Attack]
+          cost: 4
+
+        - name: Island
+          type: [Action, Victory]
+          cost: 4
+
+        - name: Navigator
+          type: Action
+          cost: 4
+
+        - name: Pirate Ship
+          type: [Action, Attack]
+          cost: 4
+
+        - name: Salvager
+          type: Action
+          cost: 4
+
+        - name: Sea Hag
+          type: [Action, Attack]
+          cost: 4
+
+        - name: Treasure Map
+          type: Action
+          cost: 4
+
+        - name: Bazaar
+          type: Action
+          cost: 5
+
+        - name: Explorer
+          type: Action
+          cost: 5
+
+        - name: Ghost Ship
+          type: [Action, Attack]
+          cost: 5
+
+        - name: Merchant Ship
+          type: [Action, Duration]
+          cost: 5
+
+        - name: Outpost
+          type: [Action, Duration]
+          cost: 5
+
+        - name: Tactician
+          type: [Action, Duration]
+          cost: 5
+
+        - name: Treasury
+          type: Action
+          cost: 5
+
+        - name: Wharf
+          type: [Action, Duration]
+          cost: 5
