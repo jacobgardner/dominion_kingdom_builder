@@ -11,7 +11,7 @@ The benefit of this app above the others are **NUMEROUS**.  Well at least a coup
  * Support for multiple supply piles from a single collection -- Have more than 6 people that want to play from your single collection of cards?  Well you can make completely non-conflicting kingdoms from the same collection. 
  * Card-type constraints -- Whether you want to play with no attack cards or nothing but them, you can set those constraints and customize your game.
  * Print out the kingdom alphabetically, sorted by cost, and/or grouped by expansion.  Whatever you want.
- 
+
 
 Prerequisites
 -------------
@@ -23,3 +23,8 @@ Install the prerequisite programs:
 
 Usage
 -----
+
+License
+-------
+
+See LICENSE.md for software license information.
