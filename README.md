@@ -7,8 +7,11 @@ So _THIS_ app allows you to choose the 10 random decks to add to the supply (the
 
 The benefit of this app above the others are **NUMEROUS**.  Well at least a couple...
 
- * It's open source - Add or remove features.  If I like your changes, I'll merge them.  If I don't like you're changes, I'll tell you why.  
- * Support for multiple supply piles from a single collection -- 
+ * It's open source -- Add or remove features.  If I like your changes, I'll merge them.  If I don't like you're changes, I'll tell you why.  
+ * Support for multiple supply piles from a single collection -- Have more than 6 people that want to play from your single collection of cards?  Well you can make completely non-conflicting kingdoms from the same collection. 
+ * Card-type constraints -- Whether you want to play with no attack cards or nothing but them, you can set those constraints and customize your game.
+ * Print out the kingdom alphabetically, sorted by cost, and/or grouped by expansion.  Whatever you want.
+ 
 
 Prerequisites
 -------------
