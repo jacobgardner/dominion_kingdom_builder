@@ -142,18 +142,18 @@ class TestCollection(unittest.TestCase):
 
     def test_create_decks(self):
         collection = dominion.Collection('test_decks/test_deck_3.yml')
-        decks = collection.create_supply()
+        decks = collection.create_kingdom()
 
         self.assertEquals(len(decks), 1)
         self.assertEquals(len(decks[0].cards), 10)
 
         collection = dominion.Collection('test_decks/test_deck_3.yml')
-        decks = collection.create_supply(deck_size=3)
+        decks = collection.create_kingdom(deck_size=3)
         self.assertEquals(len(decks), 1)
         self.assertEquals(len(decks[0].cards), 3)
 
         collection = dominion.Collection('test_decks/test_deck_3.yml')
-        decks = collection.create_supply(supplies=3)
+        decks = collection.create_kingdom(kingdoms=3)
         self.assertEquals(len(decks), 3)
 
         for i in xrange(3):
@@ -161,7 +161,7 @@ class TestCollection(unittest.TestCase):
 
         collection = dominion.Collection('test_decks/test_deck_3.yml')
         self.assertEquals(len(collection.cards), 41)
-        decks = collection.create_supply(supplies=2)
+        decks = collection.create_kingdom(kingdoms=2)
         self.assertNotEqual(decks[0].cards, decks[1].cards)
 
         self.assertEquals(len(collection.cards), 21)
@@ -186,7 +186,7 @@ class TestCollection(unittest.TestCase):
         for _ in xrange(30):
             # Repeat 30 times because random used
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            decks = collection.create_supply(
+            decks = collection.create_kingdom(
                 type_constraints=dict(Action=(1, None)))
 
             self.assertEquals(len(decks[0]), 10)
@@ -199,7 +199,7 @@ class TestCollection(unittest.TestCase):
             self.assertGreater(actions, 0)
 
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            decks = collection.create_supply(
+            decks = collection.create_kingdom(
                 type_constraints=dict(Action=(1, 2)))
 
             actions = 0
@@ -213,17 +213,17 @@ class TestCollection(unittest.TestCase):
 
             with self.assertRaises(ValueError):
                 collection = dominion.Collection('test_decks/test_deck_3.yml')
-                decks = collection.create_supply(type_constraints=dict(
+                decks = collection.create_kingdom(type_constraints=dict(
                     Action=(1, 2), Unique=(0, 3)))
 
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            decks = collection.create_supply(type_constraints=dict(
+            decks = collection.create_kingdom(type_constraints=dict(
                 Action=(6, 6), Unique=(6, 6)))
 
             self.assertEquals(len(decks[0]), 10)
 
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            decks = collection.create_supply(supplies=2, type_constraints=dict(
+            decks = collection.create_kingdom(kingdoms=2, type_constraints=dict(
                 Action=(6, 6), Unique=(6, 6)))
 
             self.assertEquals(len(decks[0]), 10)
@@ -237,7 +237,7 @@ class TestCollection(unittest.TestCase):
             self.assertGreater(uniques, 0)
 
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            decks = collection.create_supply(supplies=3, type_constraints=dict(
+            decks = collection.create_kingdom(kingdoms=3, type_constraints=dict(
                 Action=(6, 6), Unique=(6, 6)))
 
             self.assertEquals(len(decks[0]), 10)
@@ -247,21 +247,21 @@ class TestCollection(unittest.TestCase):
     def test_set_constraints(self):
         for _ in xrange(30):
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            decks = collection.create_supply(set_constraints=[
+            decks = collection.create_kingdom(set_constraints=[
                 'FileSetA', 'FileSetB'])
 
             for card in decks[0]:
                 self.assertIn(card.set, ['FileSetA', 'FileSetB'])
 
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            decks = collection.create_supply(set_constraints=[
+            decks = collection.create_kingdom(set_constraints=[
                 'FileSetD'])
 
             for card in decks[0]:
                 self.assertEquals(card.set, 'FileSetD')
 
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            decks = collection.create_supply(set_constraints='FileSetD')
+            decks = collection.create_kingdom(set_constraints='FileSetD')
 
             for card in decks[0]:
                 self.assertEquals(card.set, 'FileSetD')
@@ -269,44 +269,44 @@ class TestCollection(unittest.TestCase):
     def test_pinned_cards(self):
         for _ in xrange(30):
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            supplies = collection.create_supply(pinned_cards=['FileCard3',
+            kingdoms = collection.create_kingdom(pinned_cards=['FileCard3',
                                                               'FileCard4'])
 
-            names = [card.name for card in supplies[0]]
+            names = [card.name for card in kingdoms[0]]
             self.assertIn('FileCard3', names)
             self.assertIn('FileCard4', names)
 
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            supplies = collection.create_supply(supplies=2,
+            kingdoms = collection.create_kingdom(kingdoms=2,
                                                 pinned_cards=['FileCard3',
                                                               'FileCard4'])
-            names = [card.name for card in supplies[0]]
-            names.extend([card.name for card in supplies[1]])
+            names = [card.name for card in kingdoms[0]]
+            names.extend([card.name for card in kingdoms[1]])
             self.assertIn('FileCard3', names)
             self.assertIn('FileCard4', names)
 
             collection = dominion.Collection('test_decks/test_deck_3.yml')
-            supplies = collection.create_supply(supplies=2,
+            kingdoms = collection.create_kingdom(kingdoms=2,
                                                 pinned_cards=[['FileCard3'],
                                                               ['FileCard4']])
-            names = [card.name for card in supplies[0]]
-            names2 = ([card.name for card in supplies[1]])
+            names = [card.name for card in kingdoms[0]]
+            names2 = ([card.name for card in kingdoms[1]])
             self.assertIn('FileCard3', names)
             self.assertIn('FileCard4', names2)
 
 
 class TestDeck(unittest.TestCase):
     def test_creation(self):
-        supply = dominion.Supply()
-        self.assertEquals(supply.cards, [])
-        self.assertEquals(supply.deck_cnt, 10)
+        kingdom = dominion.Kingdom()
+        self.assertEquals(kingdom.cards, [])
+        self.assertEquals(kingdom.deck_cnt, 10)
 
-        supply = dominion.Supply(8)
-        self.assertEquals(supply.deck_cnt, 8)
+        kingdom = dominion.Kingdom(8)
+        self.assertEquals(kingdom.deck_cnt, 8)
 
     def test_prune(self):
         collection = dominion.Collection('test_decks/test_deck_3.yml')
-        decks = collection.create_supply()
+        decks = collection.create_kingdom()
 
         pruned_cards = decks[0].prune()
 

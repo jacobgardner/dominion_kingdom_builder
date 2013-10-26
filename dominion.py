@@ -83,23 +83,24 @@ class Collection(object):
 
         del self.cards[card.name]
 
-    def create_supply(self, supplies=1, deck_size=10, type_constraints={},
-                      set_constraints=None, pinned_cards=[]):
-        # Create a supply for each count
-        supplies = [Supply(deck_size) for _ in xrange(supplies)]
+    def create_kingdom(self, kingdoms=1, deck_size=10, type_constraints={},
+                       set_constraints=None, pinned_cards=[]):
+        # Create a kingdom for each count
+        kingdoms = [Kingdom(deck_size) for _ in xrange(kingdoms)]
 
         try:
             # If a single list, then distribute the pinned cards across the
-            # supplies randomly.
+            # kingdoms randomly.
             for card in pinned_cards:
-                d = random.choice(supplies)
+                d = random.choice(kingdoms)
                 d.cards.append(self.cards[card])
                 self.remove(card)
         except TypeError:
-            # If a list of lists, then each list corresponds with a supply pile
-            for pinned_cards, supply in zip(pinned_cards, supplies):
+            # If a list of lists, then each list corresponds with a kingdom
+            # pile
+            for pinned_cards, kingdom in zip(pinned_cards, kingdoms):
                 for card in pinned_cards:
-                    supply.cards.append(self.cards[card])
+                    kingdom.cards.append(self.cards[card])
                     self.remove(card)
 
         try:
@@ -118,14 +119,14 @@ class Collection(object):
         except TypeError:
             pass
 
-        # Add card-type restraints to the supplies
+        # Add card-type restraints to the kingdoms
         for key, type_constraint in type_constraints.iteritems():
             type_constraint = Constraint(*type_constraint)
 
-            for supply in supplies:
+            for kingdom in kingdoms:
                 try:
                     # If there's a max, then randomly choose how many of this
-                    # type of card to put in the supply.
+                    # type of card to put in the kingdom.
                     type_count = random.randint(type_constraint.min,
                                                 type_constraint.max)
                     remove_remaining = True
@@ -143,14 +144,14 @@ class Collection(object):
                     # take all the remaining cards.
                     sample = self.sorted_cards[key]
 
-                # Add the cards to the supply and remove them from the
+                # Add the cards to the kingdom and remove them from the
                 # collection
                 for card in sample:
-                    supply.cards.append(card)
+                    kingdom.cards.append(card)
                     self.remove(card)
 
-                # Prune the supply down to the deck size.
-                pruned_cards = supply.prune()
+                # Prune the kingdom down to the deck size.
+                pruned_cards = kingdom.prune()
 
                 # Re-add the pruned cards (if any) to the collection
                 for card in pruned_cards:
@@ -163,27 +164,27 @@ class Collection(object):
                     self.remove(card)
 
         # At this point, all types with constraints on them have been used
-        # Just keep adding random cards until the supplies are filled up.
+        # Just keep adding random cards until the kingdoms are filled up.
         while 1:
-            remaining = [supply for supply in supplies
-                         if len(supply) < deck_size]
+            remaining = [kingdom for kingdom in kingdoms
+                         if len(kingdom) < deck_size]
 
             if not remaining:
                 break
 
-            for supply in remaining:
+            for kingdom in remaining:
                 try:
                     card = random.choice(self.cards.values())
                 except IndexError:
                     raise ValueError(
                         'Not enough cards with your given parameters')
-                supply.cards.append(card)
+                kingdom.cards.append(card)
                 self.remove(card)
 
-        return supplies
+        return kingdoms
 
 
-class Supply(object):
+class Kingdom(object):
     def __init__(self, deck_cnt=10):
         self.cards = []
         self.deck_cnt = deck_cnt
@@ -204,18 +205,30 @@ class Supply(object):
     def __iter__(self):
         return self.cards.__iter__()
 
-    def pprint(self, sort_on='name'):
+    def display_cards(self, cards, sort_on='name', indent=''):
+        cards = sorted(cards, key=lambda x: getattr(x, sort_on))
         s = ''
-        categorized = defaultdict(list)
-        for card in self.cards:
-            categorized[card.set].append(card)
+        for card in cards:
+            s = ''.join([s, indent, card.name, ' - ', str(card.cost), '\n'])
 
-        for key, cards in categorized.iteritems():
-            s = ''.join([s, key, '\n'])
-            s = ''.join([s, '=' * len(key), '\n'])
-            cards = sorted(cards, key=lambda x: getattr(x, sort_on))
-            for card in cards:
-                s = ''.join([s, '  ', card.name, ' - ', str(card.cost), '\n'])
+        return s
+
+    def pprint(self, sort_on='name', group_by_set=True):
+        s = ''
+
+        if group_by_set:
+            categorized = defaultdict(list)
+            for card in self.cards:
+                categorized[card.set].append(card)
+
+            for key, cards in categorized.iteritems():
+                s = ''.join([s, key, '\n'])
+                s = ''.join([s, '=' * len(key), '\n'])
+                s = ''.join([s, self.display_cards(cards, sort_on=sort_on,
+                                                   indent='  ')])
+        else:
+            s = self.display_cards(self.cards, sort_on=sort_on)
+
         return s
 
     def __str__(self):
@@ -224,10 +237,15 @@ class Supply(object):
 
 def main():
     collection = Collection('dominion_cards.yml')
-    supply = collection.create_supply()[0]
-    print supply
+    kingdoms = collection.create_kingdom(kingdoms=2, type_constraints=dict(
+        Duration=(2, None)))
 
-    print supply.pprint(sort_on='cost')
+    for idx, kingdom in enumerate(kingdoms):
+        print 'Kingdom {0}'.format(idx + 1)
+        print '==========='
+
+        # print kingdom.pprint(sort_on='cost', group_by_set=False)
+        print kingdom.pprint(sort_on='name', group_by_set=False)
 
 
 if __name__ == '__main__':
