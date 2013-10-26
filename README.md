@@ -27,4 +27,4 @@ Usage
 License
 -------
 
-See LICENSE.md for software license information.
+See [LICENSE.md](LICENSE.md) for software license information.
