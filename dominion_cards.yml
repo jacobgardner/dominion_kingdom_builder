@@ -361,3 +361,104 @@ Sets:
         - name: Wharf
           type: [Action, Duration]
           cost: 5
+    - name: Seaside
+      cards:
+        - name: Bank
+          type: Treasure
+          cost: 7
+
+        - name: Bishop
+          type: Action
+          cost: 4
+
+        - name: City
+          type: Action
+          cost: 5
+
+        - name: Contraband
+          type: Treasure
+          cost: 5
+
+        - name: Counting House
+          type: Action
+          cost: 5
+
+        - name: Expand
+          type: Action
+          cost: 7
+
+        - name: Forge
+          type: Action
+          cost: 7
+
+        - name: Goons
+          type: [Action, Attack]
+          cost: 6
+
+        - name: Grand Market
+          type: 6
+          cost: Action
+
+        - name: Hoard
+          type: Treasure
+          cost: 6
+
+        - name: King's Court
+          type: Action
+          cost: 7
+
+        - name: Loan
+          type: Treasure
+          cost: 3
+
+        - name: Mint
+          type: Action
+          cost: 5
+
+        - name: Monument
+          type: Action
+          cost: 4
+
+        - name: Mountebank
+          type: [Action, Attack]
+          cost: 5
+
+        - name: Peddler
+          type: Action
+          cost: 8
+
+        - name: Quarry
+          type: Treasure
+          cost: 4
+
+        - name: Rabble
+          type: [Action, Attack]
+          cost: 5
+
+        - name: Royal Seal
+          type: Treasure
+          cost: 5
+
+        - name: Talisman
+          type: Treasure
+          cost: 4
+
+        - name: Trade Route
+          type: Action
+          cost: 3
+
+        - name: Vault
+          type: Action
+          cost: 5
+
+        - name: Venture
+          type: Treasure
+          cost: 5
+
+        - name: Watchtower
+          type: [Action, Reaction]
+          cost: 3
+
+        - name: Worker's Village
+          type: Action
+          cost: 4
