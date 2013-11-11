@@ -237,8 +237,7 @@ class Kingdom(object):
 
 def main():
     collection = Collection('dominion_cards.yml')
-    kingdoms = collection.create_kingdom(kingdoms=2, type_constraints=dict(
-        Duration=(2, None)))
+    kingdoms = collection.create_kingdom(kingdoms=1)
 
     for idx, kingdom in enumerate(kingdoms):
         print 'Kingdom {0}'.format(idx + 1)

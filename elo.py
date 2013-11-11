@@ -52,11 +52,11 @@ def game_results(players=[]):
 
             expected = expected_score(winner.rating, opponent.rating)
 
-            k = find_k(winner.rating)
+            k = find_k(winner.rating)/(len(players) - 1)
             rating = adjust_rating(winner.rating, expected, elo_score, k)
 
             expected = expected_score(opponent.rating, winner.rating)
-            k = find_k(opponent.rating)
+            k = find_k(opponent.rating)/(len(players) - 1)
 
             output[idx + 1 + o].rating = adjust_rating(
                 opponent.rating, expected, 1 - elo_score, k)
