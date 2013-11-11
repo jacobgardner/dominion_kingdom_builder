@@ -396,8 +396,8 @@ Sets:
           cost: 6
 
         - name: Grand Market
-          type: 6
-          cost: Action
+          type: Action
+          cost: 6
 
         - name: Hoard
           type: Treasure
