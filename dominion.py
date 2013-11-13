@@ -276,19 +276,6 @@ class Kingdom(object):
 
         r = s.get('http://www.dominiondeck.com/node/add/game')
 
-        headers = {
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Encoding': 'gzip,deflate,sdch',
-            'Referer': 'http://www.dominiondeck.com/node/add/game',
-            'Origin': 'http://www.dominiondeck.com',
-            'DNT': '1',
-            'Host': 'www.dominiondeck.com',
-            'Proxy-Connection': 'keep-alive',
-            'Accept-Language': 'en-US,en;q=0.8',
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36',
-            # 'Cookie': '; '.join(['='.join([a, b]) for a, b in s.cookies.items()])
-        }
-
         payload['title'] = uuid.uuid4().hex
 
         for idx, id in enumerate(self._ids(s)):
@@ -296,7 +283,7 @@ class Kingdom(object):
             payload['field_game_cards[{0}][_weight]'.format(idx)] = str(idx)
 
         payload['taxonomy[tags][1]'] = ''
-        payload['field_random_game[value]'] = '0'
+        payload['field_random_game[value]'] = '1'
         payload['changed'] = ''
 
         payload['form_build_id'] = re.findall(r'name="form_build_id" id="(.*?)"', r.text)[-1]
@@ -304,8 +291,8 @@ class Kingdom(object):
         payload['form_id'] = 'game_node_form'
         payload['op'] = 'Save'
 
-        r = s.post('http://www.dominiondeck.com/node/add/game',
-                    headers=headers, data=payload, allow_redirects=True, verify=True)
+        r = s.post('http://www.dominiondeck.com/node/add/game', data=payload,
+                   allow_redirects=True, verify=True)
 
         return 'http://www.dominiondeck.com/games/{0}'.format(payload['title'])
 
