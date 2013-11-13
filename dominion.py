@@ -1,7 +1,10 @@
-from collections import defaultdict, namedtuple
+from collections import defaultdict, namedtuple, OrderedDict
 import random
 import yaml
 import copy
+import requests
+import uuid
+import re
 
 _Constraint = namedtuple('Constraint', ['min', 'max'])
 
@@ -235,6 +238,77 @@ class Kingdom(object):
         return self.pprint()
 
 
+    NODE_REFERENCE = 'http://www.dominiondeck.com/nodereference/autocomplete/field_game_cards/{0}'
+
+    def _ids(self, session=requests):
+        for card in self.cards:
+            r = session.get(self.NODE_REFERENCE.format(card.name))
+
+            for key in r.json():
+                suf = key.lower()[len(card.name):len(card.name) + 5]
+                if suf == ' [nid':
+                    yield key
+
+    def login(self):
+        payload = {
+            'op': 'Log in',
+            'openid.return_to': 'http://www.dominiondeck.com/openid/authenticate?destination=user',
+            'form_id': 'user_login',
+            'pass': 'shadow',
+            'name': 'jacob.v.gardner',
+            'openid_identifier': ''
+        }
+
+
+        s = requests.Session()
+
+        r = s.get('http://www.dominiondeck.com/user/login')
+
+        payload['form_build_id'] = re.search(r'name="form_build_id" id="(.*?)"', r.text).group(1)
+        r = s.post('http://www.dominiondeck.com/user/login', data=payload)
+
+        return s
+
+    def dominiondeck(self):
+        s = self.login()
+
+        payload = OrderedDict()
+
+        r = s.get('http://www.dominiondeck.com/node/add/game')
+
+        headers = {
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Encoding': 'gzip,deflate,sdch',
+            'Referer': 'http://www.dominiondeck.com/node/add/game',
+            'Origin': 'http://www.dominiondeck.com',
+            'DNT': '1',
+            'Host': 'www.dominiondeck.com',
+            'Proxy-Connection': 'keep-alive',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36',
+            # 'Cookie': '; '.join(['='.join([a, b]) for a, b in s.cookies.items()])
+        }
+
+        payload['title'] = uuid.uuid4().hex
+
+        for idx, id in enumerate(self._ids(s)):
+            payload['field_game_cards[{0}][nid][nid]'.format(idx)] = str(id)
+            payload['field_game_cards[{0}][_weight]'.format(idx)] = str(idx)
+
+        payload['taxonomy[tags][1]'] = ''
+        payload['field_random_game[value]'] = '0'
+        payload['changed'] = ''
+
+        payload['form_build_id'] = re.findall(r'name="form_build_id" id="(.*?)"', r.text)[-1]
+        payload['form_token'] = re.findall(r'name="form_token".*value="(.*?)"', r.text)[-1]
+        payload['form_id'] = 'game_node_form'
+        payload['op'] = 'Save'
+
+        r = s.post('http://www.dominiondeck.com/node/add/game',
+                    headers=headers, data=payload, allow_redirects=True, verify=True)
+
+        return 'http://www.dominiondeck.com/games/{0}'.format(payload['title'])
+
 def main():
     collection = Collection('dominion_cards.yml')
     kingdoms = collection.create_kingdom(kingdoms=1)
@@ -245,6 +319,7 @@ def main():
 
         # print kingdom.pprint(sort_on='cost', group_by_set=False)
         print kingdom.pprint(sort_on='name', group_by_set=False)
+        print kingdom.dominiondeck()
 
 
 if __name__ == '__main__':
