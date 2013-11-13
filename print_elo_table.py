@@ -25,6 +25,8 @@ def main(results_file, starting_elo=STARTING_ELO):
 
         results = []
         for player in game:
+            if player == '_game':
+                continue
             results.append((player, players.get(player, starting_elo),
                             game[player]))
 
@@ -33,6 +35,10 @@ def main(results_file, starting_elo=STARTING_ELO):
         for player in adjusted:
             players[player.id] = player.rating
 
+        try:
+            print '{0: ^80}'.format(game['_game'])
+        except KeyError:
+            pass
         print_elos(players)
 
 if __name__ == '__main__':
