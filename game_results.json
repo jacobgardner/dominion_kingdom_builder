@@ -20,6 +20,7 @@
 		{"Jacob": 3, "Jason": 2, "Kevin": 5, "Royce": 1, "Herr": 6, "Matt": 5},
 		{"Jacob": 3, "Jason": 3, "Matt": 1},
 		{"Jacob": 2, "Kevin": 4, "Royce": 1, "Matt": 3},
-		{"Jacob": 3, "Kevin": 1, "Jason": 2, "Matt": 4}
+		{"Jacob": 3, "Kevin": 1, "Jason": 2, "Matt": 4},
+		{"Kevin": 5, "Jacob": 4, "Royce": 3, "Matt": 2, "Jason": 1}
 	]
 }
