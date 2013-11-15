@@ -8,6 +8,9 @@ import re
 
 _Constraint = namedtuple('Constraint', ['min', 'max'])
 
+NODE_REFERENCE = 'http://www.dominiondeck.com/nodereference/autocomplete/field_game_cards/{0}'
+AUTHENTICATE = 'http://www.dominiondeck.com/openid/authenticate?destination=user'
+
 
 def Constraint(min=0, max=None):
     '''
@@ -237,12 +240,9 @@ class Kingdom(object):
     def __str__(self):
         return self.pprint()
 
-
-    NODE_REFERENCE = 'http://www.dominiondeck.com/nodereference/autocomplete/field_game_cards/{0}'
-
     def _ids(self, session=requests):
         for card in self.cards:
-            r = session.get(self.NODE_REFERENCE.format(card.name))
+            r = session.get(NODE_REFERENCE.format(card.name))
 
             for key in r.json():
                 suf = key.lower()[len(card.name):len(card.name) + 5]
@@ -252,19 +252,19 @@ class Kingdom(object):
     def login(self):
         payload = {
             'op': 'Log in',
-            'openid.return_to': 'http://www.dominiondeck.com/openid/authenticate?destination=user',
+            'openid.return_to': AUTHENTICATE,
             'form_id': 'user_login',
             'pass': 'shadow',
             'name': 'jacob.v.gardner',
             'openid_identifier': ''
         }
 
-
         s = requests.Session()
 
         r = s.get('http://www.dominiondeck.com/user/login')
 
-        payload['form_build_id'] = re.search(r'name="form_build_id" id="(.*?)"', r.text).group(1)
+        payload['form_build_id'] = re.search(
+            r'name="form_build_id" id="(.*?)"', r.text).group(1)
         r = s.post('http://www.dominiondeck.com/user/login', data=payload)
 
         return s
@@ -286,8 +286,11 @@ class Kingdom(object):
         payload['field_random_game[value]'] = '1'
         payload['changed'] = ''
 
-        payload['form_build_id'] = re.findall(r'name="form_build_id" id="(.*?)"', r.text)[-1]
-        payload['form_token'] = re.findall(r'name="form_token".*value="(.*?)"', r.text)[-1]
+        payload['form_build_id'] = re.findall(
+            r'name="form_build_id" id="(.*?)"', r.text)[-1]
+
+        payload['form_token'] = re.findall(
+            r'name="form_token".*value="(.*?)"', r.text)[-1]
         payload['form_id'] = 'game_node_form'
         payload['op'] = 'Save'
 
@@ -296,18 +299,41 @@ class Kingdom(object):
 
         return 'http://www.dominiondeck.com/games/{0}'.format(payload['title'])
 
-def main():
+
+def main(num_kingdoms, dominiondeck, group_by_set, sort_on):
     collection = Collection('dominion_cards.yml')
-    kingdoms = collection.create_kingdom(kingdoms=1)
+    kingdoms = collection.create_kingdom(kingdoms=num_kingdoms)
 
     for idx, kingdom in enumerate(kingdoms):
         print 'Kingdom {0}'.format(idx + 1)
         print '==========='
 
-        # print kingdom.pprint(sort_on='cost', group_by_set=False)
-        print kingdom.pprint(sort_on='name', group_by_set=False)
-        print kingdom.dominiondeck()
+        print kingdom.pprint(sort_on=sort_on, group_by_set=group_by_set)
+
+        if dominiondeck:
+            print kingdom.dominiondeck()
 
 
 if __name__ == '__main__':
-    main()
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser()
+    parser.add_argument(
+        'num_kingdoms', metavar='kingdoms', type=int,
+        help='The number of kingdoms to create from a single collection')
+
+    parser.add_argument(
+        '-d', '--dominiondeck', action='store_true',
+        help='When enabled, the deck is also generated at dominiondeck.com')
+
+    parser.add_argument(
+        '-g', '--group-by-set', action='store_true',
+        )
+
+    parser.add_argument(
+        '-s', '--sort-on', type=str, default='name', metavar='X',
+        help="Sort on 'name' or 'price'.")
+
+    args = parser.parse_args()
+
+    main(args.num_kingdoms, args.dominiondeck, args.group_by_set, args.sort_on)
