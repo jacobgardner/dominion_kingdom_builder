@@ -331,8 +331,8 @@ if __name__ == '__main__':
         )
 
     parser.add_argument(
-        '-s', '--sort-on', type=str, default='name', metavar='X',
-        help="Sort on 'name' or 'price'.")
+        '-s', '--sort-on', type=str, default='name', metavar='KEY',
+        help="Sort on 'name' or 'cost'.")
 
     args = parser.parse_args()
 
