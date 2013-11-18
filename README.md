@@ -24,6 +24,7 @@ Install the prerequisite programs:
 Usage
 -----
 
+```
 python dominion.py [-h] [-d] [-g] [-s KEY] kingdoms
 
 positional arguments:
@@ -37,6 +38,7 @@ optional arguments:
   -g, --group-by-set
   -s KEY, --sort-on KEY
                         Sort on 'name' or 'cost'.
+```
 
 License
 -------
