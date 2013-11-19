@@ -25,8 +25,7 @@ Usage
 -----
 
 ```
-python dominion.py [-h] [-d] [-g] [--sort-on KEY] [-c TYPE MIN MAX] [-s SET]
-                   kingdoms
+python dominion.py [-h] [-d] [-g] [--sort-on KEY] [-c TYPE MIN MAX] [-s SET] kingdoms
 
 positional arguments:
   kingdoms              The number of kingdoms to create from a single collection
