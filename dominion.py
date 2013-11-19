@@ -348,9 +348,11 @@ def main(num_kingdoms, dominiondeck, group_by_set, sort_on, type_constraints,
 if __name__ == '__main__':
     from argparse import ArgumentParser
 
-    parser = ArgumentParser()
+    parser = ArgumentParser(
+        description='Generates a random kingdom with any desired constraints.')
+
     parser.add_argument(
-        'num_kingdoms', metavar='kingdoms', type=int,
+        'num_kingdoms', metavar='kingdoms', type=int, default=1, nargs='?',
         help='The number of kingdoms to create from a single collection')
 
     parser.add_argument(
@@ -368,7 +370,7 @@ if __name__ == '__main__':
         help="Sort on 'name' or 'cost'.")
 
     parser.add_argument(
-        '-c', '--constraint', type=str, nargs=3, action='append',
+        '-c',  type=str, nargs=3, action='append',
         metavar=('TYPE', 'MIN', 'MAX'),
         help='TYPE specifies the card-type the constraint will be applied to. '
         'MIN must be 0 or higher specifying the minimum number of that '
