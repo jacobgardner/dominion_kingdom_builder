@@ -363,6 +363,7 @@ Sets:
           cost: 5
 
     - name: Prosperity
+      special: Add Colonies and Platinums to the supply.
       cards:
         - name: Bank
           type: Treasure

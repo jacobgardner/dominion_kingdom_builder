@@ -38,6 +38,16 @@ def flatten_cards(sets):
 
     return cards
 
+def special_cards(sets):
+    specials = {}
+
+    for set_data in sets['Sets']:
+        try:
+            specials[set_data['name'].lower()] = set_data['special']
+        except KeyError:
+            pass
+
+    return specials
 
 class Deck(object):
     def __init__(self, card_data):
@@ -60,6 +70,7 @@ class Collection(object):
 
         self.card_tree = load_cards(card_set)
         self.flattened = flatten_cards(self.card_tree)
+        self.specials = special_cards(self.card_tree)
         self.cards = {}
         self.sorted_cards = defaultdict(list)
 
@@ -194,12 +205,19 @@ class Collection(object):
                 kingdom.cards.append(card)
                 self.remove(card)
 
+        for kingdom in kingdoms:
+            for key, value in self.specials.iteritems():
+                if random.choice(kingdom.cards).set.lower() == key:
+                    kingdom.specials.append(value)
+
+
         return kingdoms
 
 
 class Kingdom(object):
     def __init__(self, deck_cnt=10):
         self.cards = []
+        self.specials = []
         self.deck_cnt = deck_cnt
 
     def prune(self):
@@ -241,6 +259,10 @@ class Kingdom(object):
                                                    indent='  ')])
         else:
             s = self.display_cards(self.cards, sort_on=sort_on)
+
+        if self.specials:
+            s = '\n'.join([s, 'Notes:'] + [' - ' + s for s in self.specials])
+            s += '\n'
 
         return s
 
