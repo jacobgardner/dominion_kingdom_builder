@@ -24,6 +24,22 @@ Install the prerequisite programs:
 Usage
 -----
 
+```
+python dominion.py [-h] [-d] [-g] [-s KEY] kingdoms
+
+positional arguments:
+  kingdoms              The number of kingdoms to create from a single
+                        collection
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -d, --dominiondeck    When enabled, the deck is also generated at
+                        dominiondeck.com
+  -g, --group-by-set
+  -s KEY, --sort-on KEY
+                        Sort on 'name' or 'cost'.
+```
+
 License
 -------
 
