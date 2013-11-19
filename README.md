@@ -25,19 +25,24 @@ Usage
 -----
 
 ```
-python dominion.py [-h] [-d] [-g] [-s KEY] kingdoms
+python dominion.py [-h] [-d] [-g] [--sort-on KEY] [-c TYPE MIN MAX] [-s SET]
+                   kingdoms
 
 positional arguments:
-  kingdoms              The number of kingdoms to create from a single
-                        collection
+  kingdoms              The number of kingdoms to create from a single collection
 
 optional arguments:
   -h, --help            show this help message and exit
-  -d, --dominiondeck    When enabled, the deck is also generated at
-                        dominiondeck.com
-  -g, --group-by-set
-  -s KEY, --sort-on KEY
-                        Sort on 'name' or 'cost'.
+  -d, --dominiondeck    When enabled, the deck is also generated at dominiondeck.com
+  -g, --group-by-set    When enabled, the generated deck's cards will be printed out grouped by the set the card came from.
+  --sort-on KEY         Sort on 'name' or 'cost'.
+  -c TYPE MIN MAX, --constraint TYPE MIN MAX
+                        TYPE specifies the card-type the constraint will be applied to. 
+                        MIN must be 0 or higher specifying the minimum number of that card-type in the supply. 
+                        MAX must be 0 or higher specifying the maximum number of that card-type in the supply. 
+                        	Setting MAX to 'X' specifies that there is no upper-limit for this card- type.
+  -s SET, --set SET     Specifying a SET restricts the kingdoms to use the specified sets.
+
 ```
 
 License
