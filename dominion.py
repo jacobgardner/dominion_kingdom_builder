@@ -69,10 +69,10 @@ class Collection(object):
     def add(self, card):
         self.cards[card.name] = card
         if isinstance(card.type, str):
-            self.sorted_cards[card.type].append(card)
+            self.sorted_cards[card.type.lower()].append(card)
         else:
             for card_type in card.type:
-                self.sorted_cards[card_type].append(card)
+                self.sorted_cards[card_type.lower()].append(card)
 
     def remove(self, card):
         try:
@@ -85,7 +85,7 @@ class Collection(object):
             types = [types]
 
         for card_type in types:
-            self.sorted_cards[card_type].remove(card)
+            self.sorted_cards[card_type.lower()].remove(card)
 
         del self.cards[card.name]
 
@@ -112,11 +112,13 @@ class Collection(object):
         try:
             # Wrap it up
             if isinstance(set_constraints, str):
-                set_constraints = [set_constraints]
+                set_constraints = [set_constraints.lower()]
+            else:
+                set_constraints = [s.lower() for s in set_constraints]
 
             # Find the cards that aren't in the desired sets
             remove_cards = [card for card in self.cards.itervalues()
-                            if card.set not in set_constraints]
+                            if card.set.lower() not in set_constraints]
 
             # Remove those desired sets
             for card in remove_cards:
@@ -144,17 +146,21 @@ class Collection(object):
 
                 try:
                     # Take a random sample of cards of the type
-                    sample = random.sample(self.sorted_cards[key], type_count)
+                    sample = random.sample(self.sorted_cards[key.lower()],
+                                           type_count)
                 except ValueError:
                     # If there aren't enough of that type of card left, just
                     # take all the remaining cards.
-                    sample = self.sorted_cards[key]
+                    sample = self.sorted_cards[key.lower()]
 
                 # Add the cards to the kingdom and remove them from the
                 # collection
                 for card in sample:
                     kingdom.cards.append(card)
+
+                for card in sample:
                     self.remove(card)
+
 
                 # Prune the kingdom down to the deck size.
                 pruned_cards = kingdom.prune()
@@ -163,10 +169,11 @@ class Collection(object):
                 for card in pruned_cards:
                     self.add(card)
 
+
             # If there was a max, remove all cards of that type from the
             # collection
             if remove_remaining:
-                for card in copy.copy(self.sorted_cards[key]):
+                for card in copy.copy(self.sorted_cards[key.lower()]):
                     self.remove(card)
 
         # At this point, all types with constraints on them have been used
@@ -300,9 +307,11 @@ class Kingdom(object):
         return 'http://www.dominiondeck.com/games/{0}'.format(payload['title'])
 
 
-def main(num_kingdoms, dominiondeck, group_by_set, sort_on):
+def main(num_kingdoms, dominiondeck, group_by_set, sort_on, type_constraints,
+         sets):
     collection = Collection('dominion_cards.yml')
-    kingdoms = collection.create_kingdom(kingdoms=num_kingdoms)
+    kingdoms = collection.create_kingdom(kingdoms=num_kingdoms,
+        type_constraints=type_constraints, set_constraints=sets)
 
     for idx, kingdom in enumerate(kingdoms):
         print 'Kingdom {0}'.format(idx + 1)
@@ -328,12 +337,46 @@ if __name__ == '__main__':
 
     parser.add_argument(
         '-g', '--group-by-set', action='store_true',
+        help='When enabled, the generated deck\'s cards will be printed out '
+        'grouped by the set the card came from.'
         )
 
     parser.add_argument(
-        '-s', '--sort-on', type=str, default='name', metavar='KEY',
+        '--sort-on', type=str, default='name', metavar='KEY',
         help="Sort on 'name' or 'cost'.")
+
+    parser.add_argument(
+        '-c', '--constraint', type=str, nargs=3, action='append',
+        metavar=('TYPE', 'MIN', 'MAX'),
+        help='TYPE specifies the card-type the constraint will be applied to. '
+        'MIN must be 0 or higher specifying the minimum number of that '
+        'card-type in the supply. MAX must be 0 or higher specifying the '
+        'maximum number of that card-type in the supply. Setting MAX to \'X\' '
+        'specifies that there is no upper-limit for this card-type.')
+
+    parser.add_argument(
+        '-s', '--set', type=str, nargs=1, action='append',
+        help='Specifying a SET restricts the kingdoms to use the specified '
+        'sets.')
 
     args = parser.parse_args()
 
-    main(args.num_kingdoms, args.dominiondeck, args.group_by_set, args.sort_on)
+    type_constraints = {}
+
+    try:
+        for c in args.constraint:
+            try:
+                type_constraints[c[0]] = (int(c[1]), int(c[2]))
+            except ValueError:
+                type_constraints[c[0]] = (int(c[1]), None)
+    except TypeError:
+        pass
+
+    try:
+        set_constraints = [s for inner in args.set for s in inner]
+    except TypeError:
+        set_constraints = None
+
+    main(num_kingdoms=args.num_kingdoms, dominiondeck=args.dominiondeck,
+         group_by_set=args.group_by_set, sort_on=args.sort_on,
+         type_constraints=type_constraints, sets=set_constraints)

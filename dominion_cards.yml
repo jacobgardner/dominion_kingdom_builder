@@ -361,7 +361,8 @@ Sets:
         - name: Wharf
           type: [Action, Duration]
           cost: 5
-    - name: Seaside
+
+    - name: Prosperity
       cards:
         - name: Bank
           type: Treasure
