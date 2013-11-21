@@ -370,7 +370,7 @@ if __name__ == '__main__':
         help="Sort on 'name' or 'cost'.")
 
     parser.add_argument(
-        '-c',  type=str, nargs=3, action='append',
+        '-c', dest='constraint', type=str, nargs=3, action='append',
         metavar=('TYPE', 'MIN', 'MAX'),
         help='TYPE specifies the card-type the constraint will be applied to. '
         'MIN must be 0 or higher specifying the minimum number of that '

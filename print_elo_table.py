@@ -3,6 +3,7 @@ import elo
 
 STARTING_ELO = 1200
 
+
 def print_elos(elos):
     for player in elos:
         print '{0: ^10}'.format(player),
@@ -36,7 +37,7 @@ def main(results_file, starting_elo=STARTING_ELO):
             players[player.id] = player.rating
 
         try:
-            print '{0: ^80}'.format(game['_game'])
+            print '{0: ^90}'.format(game['_game'])
         except KeyError:
             pass
         print_elos(players)
