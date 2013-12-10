@@ -41,6 +41,7 @@
 		{"Jacob": 3, "Kevin": 2, "Matt": 1, "Royce": 4, "Jason": 5, "_game": "http://www.dominiondeck.com/games/05fd520552704178b3e4c7a306fcaa06"},
 		{"Jason": 5, "Jacob": 4, "Kevin": 3, "Royce": 2, "Matt": 1, "_game": "http://www.dominiondeck.com/games/8a6785c74a6d4838b5d95a69d7a4c465"},
 		{"Jason": 5, "Royce": 3, "Matt": 4, "Jacob": 2, "Kevin": 1, "_game": "http://www.dominiondeck.com/games/ae8330937012462fb7d942f4640aa794"},
-		{"Jacob": 3, "Matt": 2, "Jason": 1, "_game": "http://www.dominiondeck.com/games/d240e2411e0f490092ae1ce7fd0bd2c6 "}
-
+		{"Jacob": 3, "Matt": 2, "Jason": 1, "_game": "http://www.dominiondeck.com/games/d240e2411e0f490092ae1ce7fd0bd2c6 "},
+		{"Jacob": 6, "Jason": 5, "Herr": 4, "Kevin": 3, "Emily": 2, "Matt": 1, "_game": "http://www.dominiondeck.com/games/027782cf4e474a7ca765face25804b19"},		
+		{"Matt": 6, "Jacob": 1, "Jason": 5, "Herr": 0, "Royce": 0, "Emily": 0, "_game": ""},
 	]}
