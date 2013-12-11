@@ -21,7 +21,7 @@ def Constraint(min=0, max=None):
     return _Constraint(min, max)
 
 
-def load_cards(card_set='dominion_cards.yml'):
+def load_cards(card_set='kingdom_builder/dominion_cards.yml'):
     with open(card_set, 'r') as f:
         data = yaml.load(f.read())
 
@@ -66,7 +66,7 @@ class Deck(object):
 
 
 class Collection(object):
-    def __init__(self, card_set='dominion_cards.yml'):
+    def __init__(self, card_set='kingdom_builder/dominion_cards.yml'):
 
         self.card_tree = load_cards(card_set)
         self.flattened = flatten_cards(self.card_tree)
@@ -331,7 +331,7 @@ class Kingdom(object):
 
 def main(num_kingdoms, dominiondeck, group_by_set, sort_on, type_constraints,
          sets):
-    collection = Collection('dominion_cards.yml')
+    collection = Collection('kingdom_builder/dominion_cards.yml')
     kingdoms = collection.create_kingdom(kingdoms=num_kingdoms,
         type_constraints=type_constraints, set_constraints=sets)
 
