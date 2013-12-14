@@ -13,6 +13,11 @@ class Player(object):
         self.in_play = []
         self.discard_pile = initial_cards
         self.draw(5)
+        self.gold = 0
+        self.actions = 1
+
+    def add(self, card):
+        self.discard_pile.append(card)
 
     def cleanup(self):
         # Discard your hand and draw a new hand
@@ -23,6 +28,8 @@ class Player(object):
         self.in_play = []
 
         self.draw(5)
+        self.gold = 0
+        self.actions = 1
 
     def discard(self, card):
         # if card not in self.hand:
@@ -60,6 +67,25 @@ class Player(object):
 
         return revealed
 
+    def place_on_top(self, card):
+        if card not in self.hand:
+            raise CardNotInHand('{0} is not in your current hand'.format(card))
+
+        self.hand.remove(card)
+        self.deck.append(card)
+
+    def trash(self, card, source='hand'):
+        if source == 'hand':
+            self.hand.remove(card)
+        else:
+            assert source == 'play'
+            self.in_play.remove(card)
+
+    @property
+    def cards(self):
+        for card in (list(self.deck) + self.hand + self.in_play +
+                     self.discard_pile):
+            yield card
 
     def __str__(self):
         s = ''
@@ -68,5 +94,3 @@ class Player(object):
         s += 'deck size: ' + str(len(self.deck)) + '\n'
 
         return s
-
-    gold = 0

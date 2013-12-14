@@ -21,7 +21,11 @@ class Parser(object):
         commands = command.split()
 
         if commands[0] == 'play':
-            self.game.play(commands[1])
+            self.game.play(commands[1], player=player)
+        elif commands[0] == 'done':
+            self.game.next()
+        elif self.game.wait:
+            self.game.respond(commands, player=player)
         else:
             raise InvalidCommand('{0} is not a recognized verb.'.format(
-                commands[1]))
+                commands[0]))
