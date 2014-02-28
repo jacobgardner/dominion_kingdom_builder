@@ -464,3 +464,194 @@ Sets:
         - name: Worker's Village
           type: Action
           cost: 4
+    - name: Alchemy
+      cards:
+        - name: Alchemist
+          type: Action
+          cost: 3
+
+        - name: Apothecary
+          type: Action
+          cost: 2
+
+        - name: Apprentice
+          type: Action
+          cost: 5
+
+        - name: Familiar
+          type: [Action, Attack]
+          cost: 3
+
+        - name: Golem
+          type: Action
+          cost: 4
+
+        - name: Herbalist
+          type: Action
+          cost: 2
+
+        - name: Philosopher's Stone
+          type: Treasure
+          cost: 3
+
+        - name: Possession
+          type: Action
+          cost: 6
+
+        - name: Scrying Pool
+          type: [Action, Attack]
+          cost: 2
+
+        - name: Transmute
+          type: Action
+          cost: 0
+
+        - name: University
+          type: Action
+          cost: 2
+
+        - name: Vineyard
+          type: Victory
+          cost: 0
+
+    - name: Dark Ages
+      cards:
+        - name: Altar
+          type: Action
+          cost: 6
+
+        - name: Armory
+          type: Action
+          cost: 4
+
+        - name: Band of Misfits
+          type: Action
+          cost: 5
+
+        - name: Bandit Camp
+          type: Action
+          cost: 5
+
+        - name: Beggar
+          type: [Action, Reaction]
+          cost: 2
+
+        - name: Catacombs
+          type: Action
+          cost: 5
+
+        - name: Count
+          type: Action
+          cost: 5
+
+        - name: Counterfeit
+          type: Treasure
+          cost: 5
+
+        - name: Cultist
+          type: [Action, Attack, Looter]
+          cost: 5
+
+        - name: Death Cart
+          type: [Action, Looter]
+          cost: 4
+
+        - name: Feodum
+          type: Victory
+          cost: 4
+
+        - name: Forager
+          type: Action
+          cost: 3        
+
+        - name: Fortress
+          type: Action
+          cost: 4
+
+        - name: Graverobber
+          type: Action
+          cost: 5
+
+        - name: Hermit
+          type: Action
+          cost: 3
+
+        - name: Hunting Grounds
+          type: Action
+          cost: 6
+
+        - name: Ironmonger
+          type: Action
+          cost: 4
+
+        - name: Junk Dealer
+          type: Action
+          cost: 5
+
+        - name: Knights
+          type: [Action, Attack, Knight]
+          cost: 5
+
+        - name: Marauder
+          type: [Action, Attack, Looter]
+          cost: 4
+
+        - name: Market Square
+          type: [Action, Reaction]
+          cost: 3
+
+        - name: Mystic
+          type: Action
+          cost: 5
+
+        - name: Pillage
+          type: [Action, Attack]
+          cost: 5
+
+        - name: Poor House
+          type: Action
+          cost: 1
+
+        - name: Procession
+          type: Action
+          cost: 4
+
+        - name: Rats 
+          type: Action
+          cost: 4
+
+        - name: Rebuild
+          type: Action
+          cost: 5
+
+        - name: Rogue
+          type: [Action, Attack]
+          cost: 5
+
+        - name: Sage
+          type: Action
+          cost: 3
+
+        - name: Scavenger
+          type: Action
+          cost: 4
+
+        - name: Squire
+          type: Action
+          cost: 2
+
+        - name: Storeroom
+          type: Action
+          cost: 3
+
+        - name: Urchin
+          type: [Action, Attack]
+          cost: 3
+
+        - name: Vagrant
+          type: Action
+          cost: 2
+
+        - name: Wandering Minstrel
+          type: Action
+          cost: 4
