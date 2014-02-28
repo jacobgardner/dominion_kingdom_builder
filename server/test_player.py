@@ -43,3 +43,16 @@ class TestPlayer(unittest.TestCase):
         self.assertEquals(len(self.player.hand), 5)
         self.assertEquals(len(self.player.discard_pile), 0)
         self.assertEquals(len(self.player.deck), 5)
+
+    def test_place_on_top(self):
+        self.player.deck.append('copper')
+        self.player.hand[0] = 'estate'
+
+        estates_0 = sum(1 for card in self.player.hand
+                        if card == 'estate')
+        self.player.place_on_top('estate')
+        estates_1 = sum(1 for card in self.player.hand
+                        if card == 'estate')
+
+        self.assertEquals(estates_0 - 1, estates_1)
+        self.assertEquals(self.player.deck[-1], 'estate')

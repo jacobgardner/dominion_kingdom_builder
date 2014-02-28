@@ -8,10 +8,11 @@ class TestGame(unittest.TestCase):
     def setUp(self):
         self.game = Game(
             players=['mrkill', 'jacob', 'matt'],
-            cards=['estate', 'province', 'duchy', 'gold', 'copper', 'silver',
-                   'lighthouse', 'island', 'talisman', 'workers-village',
-                   'trading-post', 'village', 'navigator', 'throne-room',
-                   'outpost', 'wharf'])
+            cards_in_supply=[
+                'estate', 'province', 'duchy', 'gold', 'copper', 'silver',
+                'lighthouse', 'island', 'talisman', 'workers-village',
+                'trading-post', 'village', 'navigator', 'throne-room',
+                'outpost', 'wharf'])
 
     def test_turn(self):
         self.assertEquals(self.game.turn_index, 0)
@@ -34,15 +35,18 @@ class TestGame(unittest.TestCase):
         self.assertEquals(self.game.player_index, 0)
 
     def test_play(self):
-        self.game.play(card='copper')
+        self.game.play(card_name='copper')
         self.assertEquals(len(self.game.player.hand), 4)
 
+        with self.assertRaises(KeyError):
+            self.game.play(card_name='poop')
+
         with self.assertRaises(CardNotInHand):
-            self.game.play(card='poop')
+            self.game.play(card_name='province')
 
         self.assertEquals(self.game.player.gold, 1)
 
         with self.assertRaises(CardNotInHand):
-            self.game.play(card='gold')
+            self.game.play(card_name='gold')
 
         self.assertEquals(self.game.player.gold, 1)
